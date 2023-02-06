@@ -6,9 +6,8 @@ const key = {
     39:'right',
     40:'down'
   }
-};
+}
 const windowEvent = () => {
-
   window.addEventListener('keydown', e => {
     key.keyDown[key.keyValue[e.which]] = true;
     console.log(key.keyDown); 
@@ -18,14 +17,12 @@ const windowEvent = () => {
     key.keyDown[key.keyValue[e.which]] = false;
     console.log(key.keyDown);
   });
-
-};
+}
 
 const init = () => {
   windowEvent();
-};
+}
 
 window.onload = () => {
   init();
-  console.log('yes')
-};
+}
