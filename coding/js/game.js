@@ -27,4 +27,5 @@ const init = () => {
 
 window.onload = () => {
   init();
+  console.log('yes')
 };
