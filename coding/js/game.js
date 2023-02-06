@@ -7,7 +7,7 @@ const key = {
     40:'down'
   }
 }
-console.log('yes')
+
 const windowEvent = () => {
   window.addEventListener('keydown', e => {
     key.keyDown[key.keyValue[e.which]] = true;
@@ -23,7 +23,6 @@ const windowEvent = () => {
 const init = () => {
   windowEvent();
 }
-
 window.onload = () => {
   init();
 }
