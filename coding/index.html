@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VJS study - webgame</title>
+  <link rel="stylesheet" type="text/css" href="../lib/css/style.css">
+</head>
+<body>
+
+<h1>hello</h1>
+
+
+
+
+<!-- script -->
+<script>
+
+  const key = {
+    keyDown : {},
+    keyValue : {
+      37:'left',
+      38:'up',
+      39:'right',
+      40:'down',
+    }
+  };
+  
+  const windowEvent = ()=>{
+    window.addEventListener('keydown',e =>{
+      key.keyDown[key.keyValue[e.which]] = true;
+      console.log(key.keyDown);
+    });
+    window.addEventListener('keyup',e =>{
+      key.keyDown[key.keyValue[e.which]] = false;
+      console.log(key.keyDown);
+    })
+  };
+  
+  const init = ()=>{
+    windowEvent();
+  }
+
+  window.onload = ()=>{
+    init();
+  }
+  
+  </script>
+</body>
+</html>
