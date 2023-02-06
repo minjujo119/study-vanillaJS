@@ -7,6 +7,7 @@ const key = {
     40:'down'
   }
 }
+
 const windowEvent = () => {
   window.addEventListener('keydown', e => {
     if(key.keyValue[e.which] !== undefined){
@@ -26,7 +27,6 @@ const windowEvent = () => {
 const init = () => {
   windowEvent();
 }
-
 window.onload = () => {
   init();
 }
