@@ -1,3 +1,4 @@
+// 히어로 캐릭터 메소드
 class Hero {
   constructor(el){
     this.el = document.querySelector(el);
@@ -8,7 +9,6 @@ class Hero {
     if(key.keyDown['left']){
       this.el.classList.add('run');
       this.el.classList.add('flip');
-
       this.movex = this.movex - this.speed;
 
     }else if(key.keyDown['right']){
@@ -30,6 +30,15 @@ class Hero {
     }
 
     this.el.parentNode.style.transform = `translateX(${this.movex}px)`;
+  }
 
-  } 
+  // 캐릭터 위치값 알아내는 메소드
+  position(){
+    return{
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHegiht - this.el.getBoundingClientRect().top,
+      bottom: gameProp.screenHegiht - this.el.getBoundingClientRect().top - this.el.getBoundingClientRect().height
+    }
+  }
 }
