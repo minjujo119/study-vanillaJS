@@ -24,6 +24,7 @@ class Hero {
 
     if(key.keyDown['attack']){
       this.el.classList.add('attack')
+      new Bullet();
     }
     if(!key.keyDown['attack' && !key.keyDown['attack']]){
       this.el.classList.remove('attack')
@@ -40,5 +41,32 @@ class Hero {
       top: gameProp.screenHegiht - this.el.getBoundingClientRect().top,
       bottom: gameProp.screenHegiht - this.el.getBoundingClientRect().top - this.el.getBoundingClientRect().height
     }
+  }
+
+  size(){
+    return{
+      width: this.el.offsetWidth,
+      height: this.el.offsetHeight
+
+    }
+  }
+}
+
+class Bullet {
+  constructor(){
+    this.parentNode = document.querySelector('.game');
+    this.el = document.createElement('div');
+    this.el.className = 'hero_bullet';
+    this.x = 0;
+    this.y = 0;
+    this.init();
+  }
+  
+  init(){
+    this.x = hero.position().left + hero.size().width/2;
+    this.y = hero.position().bottom - hero.size().height/2;
+
+    this.el.style.transform = `translate(${this.x}px, ${this.y}px);`
+    this.parentNode.appendChild(this.el);
   }
 }
