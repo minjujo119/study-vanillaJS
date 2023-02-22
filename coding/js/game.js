@@ -2,9 +2,9 @@
 const key = {
   keyDown : {},
   keyValue : {
-    37:'left',
-    39:'right',
-    88:'attack'
+    37:'left', // <-
+    39:'right', // ->
+    88:'attack' // X
   }
 }
 
@@ -13,7 +13,7 @@ const gameProp = {
   screenHegiht : window.innerHeight
 }
 
-// 초당 60프레임으로 딜레이 없이 키 동작하게 도와줌
+// 모니터 주사율(60FPS)에 맞춰 애니메이션이 딜레이 없이 동작하게 도와줌
 const renderGame = () => {
   hero.keyMotion();
   window.requestAnimationFrame(renderGame);
@@ -52,7 +52,6 @@ const init = () => {
   loadImg();
   windowEvent();
   renderGame();
-  console.log(hero.position())
 }
 window.onload = () => {
   init();

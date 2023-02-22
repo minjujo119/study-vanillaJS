@@ -20,5 +20,5 @@
 .hero_box .hero.run{height:100%;background-image:url(../lib/images/ninja_run.png);background-size:3770px 458px; animation: hero_run 0.7s infinite steps(10);}
 .hero_box .hero.attack{height:100%;background-image:url(../lib/images/ninja_attack.png);background-size:3770px 458px; animation: hero_attack 0.7s infinite steps(10);}
 
-.hero_box .hero_bullet{position:absolute;left:0;bottom:0;z-index:90;width:160px;height:32px;background:url(../lib/images/hero_bullet.png) no-repeat;background-size:cover;}
+.hero_bullet{position:absolute;left:0;bottom:0;z-index:90;width:160px;height:32px;background:url(../lib/images/hero_bullet.png) no-repeat;background-size:cover;}
 
