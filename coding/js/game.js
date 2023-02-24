@@ -15,6 +15,10 @@ const bulletComProp = {
   arr: []
 };
 
+const jumpProp = {
+  operate: false
+}
+
 const gameBackground = {
   gameBox: document.querySelector('.game')
 }
@@ -28,10 +32,8 @@ const gameProp = {
 const renderGame = () => {
   hero.keyMotion();
   setGameBackground();
-
-  bulletComProp.arr.forEach((arr,i)=>{
-    arr.moveBullet();
-  });
+  // jumpUpMotion();
+  bulletComProp.arr.forEach((arr,i)=>{arr.moveBullet();});
   window.requestAnimationFrame(renderGame);
 }
 

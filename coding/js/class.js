@@ -4,9 +4,14 @@ class Hero {
     this.el = document.querySelector(el);
     this.movex = 0;
     this.speed = 11;
+    this.jumpHeight = 200;
     this.direction = 'right';
   }
+
+  // 키를 눌렀다 뗐을 때 메소드
   keyMotion(){
+
+    // 왼쪽 오른쪽 달리기
     if(key.keyDown['left']){
       this.direction = 'left';
       this.el.classList.add('run');
@@ -22,12 +27,30 @@ class Hero {
     if(!key.keyDown['left'] && !key.keyDown['right']){
       this.el.classList.remove('run')
     }
+
+    // 점프하기
     if(key.keyDown['up']){
-      this.el.classList.add('jump');
+      if(!jumpProp.operate){
+
+        if(this.direction == 'right'){
+          this.el.classList.add('jump');
+          hero.jumpMotion();
+          jumpProp.operate = true;  
+        }else{
+          this.el.classList.add('jump','left');
+          hero.jumpMotion();
+          jumpProp.operate = true;  
+        }
+
+
+      }
     }
     if(!key.keyDown['up']){
-      this.el.classList.remove('jump');
+      this.el.classList.remove('jump','left');
+      jumpProp.operate = false;
     }
+
+    // 공격하기
     if(key.keyDown['attack']){
       if(!bulletComProp.launch){
         this.el.classList.add('attack');
@@ -39,7 +62,7 @@ class Hero {
       this.el.classList.remove('attack')
       bulletComProp.launch = false;
     }
-    this.el.parentNode.style.transform = `translateX(${this.movex}px)`;
+    this.el.parentNode.style.transform = `translateX(${this.movex}px`;
   }
 
   // 캐릭터 위치값 알아내는 메소드
@@ -57,6 +80,16 @@ class Hero {
       height: this.el.offsetHeight
 
     }
+  }
+
+  // 점프 동작 메소드
+  jumpMotion(){
+    this.el.animate([
+      {transform : `translateY(0px)`},
+      {transform : `translateY(-${this.jumpHeight}px)`},
+      {transform : `translateY(0px)`}
+    ],{duration: 350, iteration: 1,},
+    )    
   }
 }
 
