@@ -8,17 +8,36 @@ const key = {
     40:'down',
     88:'attack' // X
   }
+};
+
+const bulletComProp = {
+  launch: false,
+  arr: []
+};
+
+const gameBackground = {
+  gameBox: document.querySelector('.game')
 }
 
 const gameProp = {
   screenWidth : window.innerWidth,
   screenHegiht : window.innerHeight
-}
+};
 
 // 모니터 주사율(60FPS)에 맞춰 애니메이션이 딜레이 없이 동작하게 도와줌
 const renderGame = () => {
   hero.keyMotion();
+  setGameBackground();
+
+  bulletComProp.arr.forEach((arr,i)=>{
+    arr.moveBullet();
+  });
   window.requestAnimationFrame(renderGame);
+}
+
+const setGameBackground = () => {
+  let parallaxValue = Math.min(0, -(hero.movex - gameProp.screenWidth/3));
+  gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`
 }
 
 // 키가 눌렸을 때 이벤트
@@ -35,6 +54,12 @@ const windowEvent = () => {
       key.keyDown[key.keyValue[e.which]] = false;
     }
   });
+
+  // 윈도우 리사이즈 될때
+  window.addEventListener('resize', e => {
+    gameProp.screenWidth = window.innerWidth;
+    gameProp.screenHegiht = window.innerHeight;
+  })
 }
 
 
