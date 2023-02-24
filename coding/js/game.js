@@ -2,8 +2,10 @@
 const key = {
   keyDown : {},
   keyValue : {
-    37:'left', // <-
-    39:'right', // ->
+    37:'left',
+    38:'up',
+    39:'right',
+    40:'down',
     88:'attack' // X
   }
 }

@@ -19,6 +19,12 @@ class Hero {
     if(!key.keyDown['left'] && !key.keyDown['right']){
       this.el.classList.remove('run')
     }
+    if(key.keyDown['up']){
+      this.el.classList.add('jump');
+    }
+    if(!key.keyDown['up']){
+      this.el.classList.remove('jump');
+    }
     if(key.keyDown['attack']){
       this.el.classList.add('attack')
       new Bullet();
