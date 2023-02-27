@@ -33,7 +33,7 @@ class Hero {
       if(!jumpProp.operate){
 
         if(this.direction == 'right'){
-          this.el.classList.add('jump');
+          this.el.classList.add('jump','right');
           hero.jumpMotion();
           jumpProp.operate = true;  
         }else{
@@ -48,6 +48,7 @@ class Hero {
         this.el.classList.remove('jump','left');
         jumpProp.operate = false;  
       }else{
+        this.el.classList.remove('jump','right');
         jumpProp.operate = false;  
       }
     }
