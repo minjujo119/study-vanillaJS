@@ -74,8 +74,8 @@ const loadImg = () => {
 }
 
 
-
 let hero;
+let bullet;
 const init = () => {
   hero = new Hero('.hero');
   loadImg();
@@ -84,4 +84,4 @@ const init = () => {
 }
 window.onload = () => {
   init();
-}
+};

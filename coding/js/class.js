@@ -5,6 +5,7 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.jumpHeight = 200;
+    this.jumpDuration = 400;
     this.direction = 'right';
   }
 
@@ -27,31 +28,26 @@ class Hero {
     if(!key.keyDown['left'] && !key.keyDown['right']){
       this.el.classList.remove('run')
     }
-
-    // 점프하기
+    
     if(key.keyDown['up']){
-      if(!jumpProp.operate){
+      // console.log(this.position().bottom, this.position().top)
+      // console.log(Math.ceil(this.el.getBoundingClientRect().top), Math.ceil(this.el.getBoundingClientRect().bottom))
+      // console.log(Math.ceil(this.position().bottom), Math.ceil(this.position().top))
 
+      if(!jumpProp.operate){
         if(this.direction == 'right'){
-          this.el.classList.add('jump','right');
-          hero.jumpMotion();
-          jumpProp.operate = true;  
+          this.el.classList.add('jump_right');
         }else{
-          this.el.classList.add('jump','left');
-          hero.jumpMotion();
-          jumpProp.operate = true;  
+          this.el.classList.add('jump_left');
         }
+        hero.jumpMotion();
       }
+      jumpProp.operate = true;
     }
     if(!key.keyDown['up']){
-      if(this.direction == 'right'){
-        this.el.classList.remove('jump','left');
-        jumpProp.operate = false;  
-      }else{
-        this.el.classList.remove('jump','right');
-        jumpProp.operate = false;  
-      }
+        jumpProp.operate = false;
     }
+    
 
     // 공격하기
     if(key.keyDown['attack']){
@@ -68,7 +64,7 @@ class Hero {
     this.el.parentNode.style.transform = `translateX(${this.movex}px`;
   }
 
-  // 캐릭터 위치값 알아내는 메소드
+  // 히어로 위치값 알아내는 메소드
   position(){
     return{
       left: this.el.getBoundingClientRect().left,
@@ -81,18 +77,19 @@ class Hero {
     return{
       width: this.el.offsetWidth,
       height: this.el.offsetHeight
-
     }
   }
-
   // 점프 동작 메소드
   jumpMotion(){
+    let jumpTimeoutID;
+    clearTimeout(jumpTimeoutID);
+    jumpTimeoutID = setTimeout(()=>{this.el.classList.remove('jump_right','jump_left');},this.jumpDuration)
     this.el.animate([
       {transform : `translateY(0px)`},
-      {transform : `translateY(-${this.jumpHeight}px)`},
-      {transform : `translateY(0px)`}
-    ],{duration: 350, iteration: 1,},
-    )    
+      {transform : `translateY(-${this.jumpHeight}px)`, offset : 0.35},
+      {transform : `translateY(0px)`, offset : 1}],
+      {duration: this.jumpDuration, iteration: 1,}
+    );
   }
 }
 
@@ -128,6 +125,7 @@ class Bullet {
       this.distance += this.speed;
     }
     this.el.style.transform = `translate(${this.distance}px, ${this.y}px) ${setRotate}`;
+    console.log(this.y, Math.ceil(hero.position().bottom - hero.size().height/2))
     this.crashBullet();
   }
 
