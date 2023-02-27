@@ -41,13 +41,15 @@ class Hero {
           hero.jumpMotion();
           jumpProp.operate = true;  
         }
-
-
       }
     }
     if(!key.keyDown['up']){
-      this.el.classList.remove('jump','left');
-      jumpProp.operate = false;
+      if(this.direction == 'right'){
+        this.el.classList.remove('jump','left');
+        jumpProp.operate = false;  
+      }else{
+        jumpProp.operate = false;  
+      }
     }
 
     // 공격하기
