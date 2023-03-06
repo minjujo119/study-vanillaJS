@@ -79,7 +79,7 @@ let monster;
 let bullet;
 const init = () => {
   hero = new Hero('.hero');
-  monster = new Monster('')
+  monster = new Monster()
   loadImg();
   windowEvent();
   renderGame();
