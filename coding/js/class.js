@@ -7,6 +7,7 @@ class Hero {
     this.jumpHeight = 200;
     this.jumpDuration = 400;
     this.direction = 'right';
+    this.attackDamage = 1000;
   }
 
   // 키를 눌렀다 뗐을 때 메소드
@@ -109,7 +110,7 @@ class Bullet {
   
   init(){
     this.bulletDirection = hero.direction === 'left' ? 'left' : 'right';
-    this.x = this.bulletDirection === 'right' ? hero.movex + hero.size().width/2;
+    this.x = this.bulletDirection === 'right' ? hero.movex + hero.size().width/2 : hero.movex - hero.size().width/2
     this.y = hero.position().bottom - hero.size().height/2;
     this.distance = this.x;
     this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
@@ -125,7 +126,7 @@ class Bullet {
       this.distance += this.speed;
     }
     this.el.style.transform = `translate(${this.distance}px, ${this.y}px) ${setRotate}`;
-    console.log(this.y, Math.ceil(hero.position().bottom - hero.size().height/2))
+    // console.log(this.y, Math.ceil(hero.position().bottom - hero.size().height/2))
     this.crashBullet();
   }
 
@@ -139,25 +140,63 @@ class Bullet {
     }
   }
   crashBullet(){
+    // 수리검이 몬스터에 부딪히면 엘리먼트 삭제, 그와 동시에 배열에서도 삭제
+    for(let j =0; j<allMonsterComProp.arr.length; j++){
+      if(this.position().left > allMonsterComProp.arr[j].position().left && this.position().right < allMonsterComProp.arr[j].position().right){
+        for(let i =0; i < bulletComProp.arr.length; i++){
+          if(bulletComProp.arr[i] === this){
+            bulletComProp.arr.splice(i,1);
+            this.el.remove();
+            allMonsterComProp.arr[j].updateHp();
+          }
+        }
+      }
+    }
+      // 수리검이 화면밖에 나가면 엘리먼트 삭제, 그와 동시에 배열에서도 삭제
     if(this.position().left > gameProp.screenWidth || this.position().right < 0){
-      this.el.remove();
+      for(let i =0; i < bulletComProp.arr.length; i++){
+        if(bulletComProp.arr[i] === this){
+          bulletComProp.arr.splice(i,1);
+          this.el.remove();
+        }
+      }
     }
   }
 }
 
 class Monster {
-  constructor(){
+  constructor(positionX, hp){
     this.parentNode = document.querySelector('.game');
     this.el = document.createElement('div');
     this.el.className = 'monster_box'
     this.elChildren = document.createElement('div');
     this.elChildren.className = 'monster';
-
+    this.hpNode = document.createElement('div');
+    this.hpNode.className = 'hp';
+    this.hpValue = hp;
+    this.hpTextNode = document.createTextNode(this.hpValue);
+    this.positionX = positionX;
 
     this.init();
   }
   init(){
+    this.hpNode.appendChild(this.hpTextNode);
+    this.el.appendChild(this.hpNode);
     this.el.appendChild(this.elChildren);
     this.parentNode.appendChild(this.el);
+    this.el.style.left = this.positionX + 'px'
+  }
+  position(){
+    return{
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHegiht - this.el.getBoundingClientRect().top,
+      bottom: gameProp.screenHegiht - this.el.getBoundingClientRect().top - this.el.getBoundingClientRect().height
+    }
+  }
+  updateHp(){
+    this.hpValue = Math.max(0, this.hpValue - hero.attackDamage);
+    console.log(this.hpValue);
+    this.el.children[0].innerText = this.hpValue;
   }
 }

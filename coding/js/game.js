@@ -1,4 +1,3 @@
-
 const key = {
   keyDown : {},
   keyValue : {
@@ -9,6 +8,10 @@ const key = {
     88:'attack' // X
   }
 };
+
+const allMonsterComProp = {
+  arr : []
+}
 
 const bulletComProp = {
   launch: false,
@@ -33,7 +36,10 @@ const renderGame = () => {
   hero.keyMotion();
   setGameBackground();
   // jumpUpMotion();
-  bulletComProp.arr.forEach((arr,i)=>{arr.moveBullet();});
+  bulletComProp.arr.forEach((arr,i)=>{
+    arr.moveBullet();
+    console.log('test');
+  });
   window.requestAnimationFrame(renderGame);
 }
 
@@ -79,7 +85,9 @@ let monster;
 let bullet;
 const init = () => {
   hero = new Hero('.hero');
-  monster = new Monster()
+  allMonsterComProp.arr[0] = new Monster(500,9000);
+  allMonsterComProp.arr[1] = new Monster(500,12000);
+
   loadImg();
   windowEvent();
   renderGame();

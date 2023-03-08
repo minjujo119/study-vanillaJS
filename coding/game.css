@@ -29,4 +29,5 @@
   to{background-position-x: -2242px;}
 }
 .monster_box{position: absolute;left:700px;bottom:0;z-index:90;width:280px;height:294px;will-change:transform;}
-.monster{height:100%;background-image:url(../lib/images/monster/monster_green_run.png);background-size:2242px 294px;animation:monster_run 1s infinite steps(8);}
+.monster_box .monster{height:100%;background-image:url(../lib/images/monster/monster_green_run.png);background-size:2242px 294px;animation:monster_run 1s infinite steps(8);}
+.monster_box .hp{position: absolute; left:0; top: 0; width:100%; font-size:110px;color:#fff;text-align: center;transform: translateY(-100%); }
