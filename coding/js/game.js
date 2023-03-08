@@ -86,7 +86,7 @@ let bullet;
 const init = () => {
   hero = new Hero('.hero');
   allMonsterComProp.arr[0] = new Monster(500,9000);
-  allMonsterComProp.arr[1] = new Monster(500,12000);
+  allMonsterComProp.arr[1] = new Monster(900,12000);
 
   loadImg();
   windowEvent();
