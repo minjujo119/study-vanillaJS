@@ -35,10 +35,8 @@ const gameProp = {
 const renderGame = () => {
   hero.keyMotion();
   setGameBackground();
-  // jumpUpMotion();
   bulletComProp.arr.forEach((arr,i)=>{
     arr.moveBullet();
-    console.log('test');
   });
   window.requestAnimationFrame(renderGame);
 }
@@ -70,9 +68,17 @@ const windowEvent = () => {
   })
 }
 
-
+// 이미지 로드먼저하기
 const loadImg = () => {
-  const preLoadImgSrc = ['../lib/images/ninja_idle.png','../lib/images/ninja_run.png','../lib/images/ninja_attack.png']
+  const preLoadImgSrc = [
+    '../lib/images/ninja_idle.png',
+    '../lib/images/ninja_jump.png',
+    '../lib/images/ninja_run.png',
+    '../lib/images/ninja_attack.png',
+    '../lib/images/monster/monster_green_run.png',
+    '../lib/images/monster/monster_yellow_run.png',
+    '../lib/images/monster/monster_pink_run.png'
+  ]
   preLoadImgSrc.forEach(arr => {
     const img = new Image();
     img.src = arr;

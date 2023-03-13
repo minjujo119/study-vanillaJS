@@ -3,9 +3,10 @@ class Hero {
   constructor(el){
     this.el = document.querySelector(el);
     this.movex = 0;
+    this.movey = 0;
     this.speed = 11;
-    this.jumpHeight = 200;
-    this.jumpDuration = 400;
+    this.jumpHeight = 300;
+    this.jumpDuration = this.jumpHeight*1.5;
     this.direction = 'right';
     this.attackDamage = 1000;
   }
@@ -20,7 +21,7 @@ class Hero {
       this.el.classList.add('flip');
       this.movex = this.movex <= 0 ? 0 : this.movex - this.speed;
     }
-    else if(key.keyDown['right']){
+    if(key.keyDown['right']){
       this.direction = 'right';
       this.el.classList.add('run');
       this.el.classList.remove('flip')
@@ -30,23 +31,24 @@ class Hero {
       this.el.classList.remove('run')
     }
     
+    // 점프하기
     if(key.keyDown['up']){
-      // console.log(this.position().bottom, this.position().top)
-      // console.log(Math.ceil(this.el.getBoundingClientRect().top), Math.ceil(this.el.getBoundingClientRect().bottom))
-      // console.log(Math.ceil(this.position().bottom), Math.ceil(this.position().top))
-
       if(!jumpProp.operate){
-        if(this.direction == 'right'){
-          this.el.classList.add('jump_right');
+        this.el.classList.add('jump');
+        let jumpTimeoutID;
+        clearTimeout(jumpTimeoutID);  
+        jumpTimeoutID = setTimeout(()=>{this.el.classList.remove('jump');},this.jumpDuration);
+
+        if(this.direction === 'right'){
+          hero.jumpMotionRight();
         }else{
-          this.el.classList.add('jump_left');
+          hero.jumpMotionLeft();
         }
-        hero.jumpMotion();
       }
       jumpProp.operate = true;
     }
     if(!key.keyDown['up']){
-        jumpProp.operate = false;
+      jumpProp.operate = false;
     }
     
 
@@ -81,17 +83,22 @@ class Hero {
     }
   }
   // 점프 동작 메소드
-  jumpMotion(){
-    let jumpTimeoutID;
-    clearTimeout(jumpTimeoutID);
-    jumpTimeoutID = setTimeout(()=>{this.el.classList.remove('jump_right','jump_left');},this.jumpDuration)
+  jumpMotionRight(){
     this.el.animate([
-      {transform : `translateY(0px)`},
-      {transform : `translateY(-${this.jumpHeight}px)`, offset : 0.35},
-      {transform : `translateY(0px)`, offset : 1}],
+      {transform : `translateY(0px) rotateY(0deg)`},
+      {transform : `translateY(-${this.jumpHeight}px)  rotateY(0deg)`, offset : 0.4},
+      {transform : `translateY(0px)  rotateY(0deg)`, offset : 1}],
       {duration: this.jumpDuration, iteration: 1,}
     );
   }
+  jumpMotionLeft(){
+    this.el.animate([
+      {transform : `translateY(0px) rotateY(180deg)`},
+      {transform : `translateY(-${this.jumpHeight}px) rotateY(180deg)`, offset : 0.4},
+      {transform : `translateY(0px) rotateY(180deg)`, offset : 1}],
+      {duration: this.jumpDuration, iteration: 1,}
+    );
+  };
 }
 
 // 수리검 클래스
@@ -111,7 +118,7 @@ class Bullet {
   init(){
     this.bulletDirection = hero.direction === 'left' ? 'left' : 'right';
     this.x = this.bulletDirection === 'right' ? hero.movex + hero.size().width/2 : hero.movex - hero.size().width/2
-    this.y = hero.position().bottom - hero.size().height/2;
+    this.y = -(hero.position().bottom) - hero.size().height/2;
     this.distance = this.x;
     this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
     this.parentNode.appendChild(this.el);
@@ -142,7 +149,7 @@ class Bullet {
   crashBullet(){
     // 수리검이 몬스터에 부딪히면 엘리먼트 삭제, 그와 동시에 배열에서도 삭제
     for(let j =0; j<allMonsterComProp.arr.length; j++){
-      if(this.position().left > allMonsterComProp.arr[j].position().left && this.position().right < allMonsterComProp.arr[j].position().right){
+      if(this.position().left > allMonsterComProp.arr[j].position().left && this.position().right < allMonsterComProp.arr[j].position().right && this.position().top < allMonsterComProp.arr[j].position().top){
         for(let i =0; i < bulletComProp.arr.length; i++){
           if(bulletComProp.arr[i] === this){
             bulletComProp.arr.splice(i,1);
