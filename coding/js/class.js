@@ -177,7 +177,6 @@ class Monster {
     this.hpInner = document.createElement('span');
     this.progress = 0;
     this.positionX = positionX;
-
     this.init();
   }
   init(){
@@ -205,7 +204,7 @@ class Monster {
   }
   dead(index){
     this.el.classList.add('remove');
-    setTimeout(()=> this.el.remove(),200);
+    setTimeout(()=> this.el.remove(),350);
     allMonsterComProp.arr.splice(index,1);
     console.log(allMonsterComProp.arr.length)
   }
