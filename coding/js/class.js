@@ -184,6 +184,9 @@ class Monster {
     this.hpInner = document.createElement('span');
     this.progress = 0;
     this.positionX = positionX;
+    this.moveX = 0;
+    this.speed = 1;
+
     this.init();
   }
   init(){
@@ -214,5 +217,10 @@ class Monster {
     setTimeout(()=> this.el.remove(),350);
     allMonsterComProp.arr.splice(index,1);
     console.log(allMonsterComProp.arr.length)
+  }
+  moveMonster(){
+    this.moveX -= this.speed;
+    this.el.style.transform = `translate(${this.moveX})`;
+
   }
 }
