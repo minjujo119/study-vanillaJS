@@ -28,7 +28,8 @@ const gameBackground = {
 
 const gameProp = {
   screenWidth : window.innerWidth,
-  screenHegiht : window.innerHeight
+  screenHegiht : window.innerHeight,
+  gameOver : false,
 };
 
 // 모니터 주사율(60FPS)에 맞춰 애니메이션이 딜레이 없이 동작하게 도와줌
@@ -38,7 +39,17 @@ const renderGame = () => {
   bulletComProp.arr.forEach((arr,i)=>{
     arr.moveBullet();
   });
+  allMonsterComProp.arr.forEach((arr,i)=>{
+    arr.moveMonster();
+  });
   window.requestAnimationFrame(renderGame);
+}
+
+const endGame = () => {
+  gameProp.gameOver = true;
+  key.keyDown.left = false;
+  key.keyDown.right = false;
+  document.querySelector('.game_over').classList.add('active');
 }
 
 const setGameBackground = () => {
@@ -49,7 +60,7 @@ const setGameBackground = () => {
 // 키가 눌렸을 때 이벤트
 const windowEvent = () => {
   window.addEventListener('keydown', e => {
-    if(key.keyValue[e.which] !== undefined){
+    if(key.keyValue[e.which] !== undefined && !gameProp.gameOver){
       key.keyDown[key.keyValue[e.which]] = true;
     }
   });

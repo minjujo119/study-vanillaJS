@@ -9,6 +9,9 @@ class Hero {
     this.jumpDuration = this.jumpHeight*1.5;
     this.direction = 'right';
     this.attackDamage = 1000;
+    this.hpProgress = 0;
+    this.hpValue = 10000;
+    this.defaultHpValue = this.hpValue;
   }
 
   // 키를 눌렀다 뗐을 때 메소드
@@ -99,6 +102,25 @@ class Hero {
       {duration: this.jumpDuration, iteration: 1,}
     );
   };
+  updateHp(monsterDamage){
+    this.hpValue = Math.max(0,this.hpValue - monsterDamage);
+    this.hpProgress = this.hpValue / this.defaultHpValue * 100;
+    const heroHpBox = document.querySelector('.state_box .hp span');
+    heroHpBox.style.width = this.hpProgress + '%'
+    this.crash();
+
+    if(this.hpValue === 0){
+      this.dead();
+    }
+  };
+  crash(){
+    this.el.classList.add('crash');
+    setTimeout(()=> this.el.classList.remove('crash'),400);
+  };
+  dead(){
+    this.el.classList.add('dead');
+    endGame();
+  };
 }
 
 // 수리검 클래스
@@ -170,6 +192,8 @@ class Bullet {
     }
   }
 }
+
+// 몬스터 클래스
 class Monster {
   constructor(positionX, hp){
     this.parentNode = document.querySelector('.game');
@@ -185,7 +209,8 @@ class Monster {
     this.progress = 0;
     this.positionX = positionX;
     this.moveX = 0;
-    this.speed = 1;
+    this.speed = 10;
+    this.crashDamage = 100;
 
     this.init();
   }
@@ -219,8 +244,21 @@ class Monster {
     console.log(allMonsterComProp.arr.length)
   }
   moveMonster(){
-    this.moveX -= this.speed;
-    this.el.style.transform = `translate(${this.moveX})`;
+    if(this.moveX + this.positionX + this.el.offsetWidth + hero.position().left - hero.movex <= 0){
+      this.moveX = hero.movex - this.positionX + gameProp.screenWidth - hero.position().left
+    }else{
+      this.moveX -= this.speed;
+    };
+    this.el.style.transform = `translateX(${this.moveX}px)`;
+    this.crash();
+  };
+  crash(){
+    let rightDiff = 30;
+    let leftDiff = 90;
+    if(hero.position().right-rightDiff > this.position().left && hero.position().left+leftDiff< this.position().right){
+      console.log('충돌')
+      hero.updateHp(this.crashDamage)
+    }
+  };
 
-  }
 }

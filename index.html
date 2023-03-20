@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>바자회스터디- vanillaJS로 웹게임 만들기</title>
+  <title>Vanilla JS로 웹게임 만들기</title>
   <link rel="stylesheet" type="text/css" href="./lib/css/common.css">
   <link rel="stylesheet" type="text/css" href="./coding/game.css">
 </head>
 <body>
-  <style>
-    .tmp{position:fixed;z-index:100;top:10px;left:10px;color:#fff;font-size:30px;}
-  </style>
   <div class="game_app">
     <div class="sky"></div>
     <div class="game">
@@ -19,9 +15,25 @@
         <div class="hero"></div>
       </div>
     </div>
+    <div class="game_info">
+      <div class="hero_state">
+        <figure class="hero_img">
+          <img src="./lib/images/ninja_profile.png" alt="">
+        </figure>
+        <div class="state_box">
+          <div class="hp">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="game_over">
+      <p>GAME OVER</p>
+    </div>
+
   </div>
-  <script src="./coding/js/class.js"></script>
-  <script src="./coding/js/game.js"></script>
+  <script type="text/javascript" src="./coding/js/class.js"></script>
+  <script type="text/javascript" src="./coding/js/game.js"></script>
 
 </body>
 </html>
