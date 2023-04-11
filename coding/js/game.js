@@ -42,6 +42,7 @@ const renderGame = () => {
   allMonsterComProp.arr.forEach((arr,i)=>{
     arr.moveMonster();
   });
+  stageInfo.stage.clearCheck();
   window.requestAnimationFrame(renderGame);
 }
 
@@ -55,6 +56,10 @@ const endGame = () => {
 const setGameBackground = () => {
   let parallaxValue = Math.min(0, -(hero.movex - gameProp.screenWidth/3));
   gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`
+}
+
+const stageInfo = {
+  stage : [],
 }
 
 // 키가 눌렸을 때 이벤트
@@ -102,8 +107,11 @@ let monster;
 let bullet;
 const init = () => {
   hero = new Hero('.hero');
-  allMonsterComProp.arr[0] = new Monster(500,9000);
-  allMonsterComProp.arr[1] = new Monster(900,12000);
+  stageInfo.stage = new Stage();
+  // allMonsterComProp.arr[0] = new Monster(pinkMonBoss,gameProp.screenWidth + 700);
+  // allMonsterComProp.arr[1] = new Monster(yellowMonBoss,gameProp.screenWidth + 1400);
+  // allMonsterComProp.arr[2] = new Monster(greenMonBoss,gameProp.screenWidth + 2100);
+
 
   loadImg();
   windowEvent();
