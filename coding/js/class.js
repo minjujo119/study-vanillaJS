@@ -24,9 +24,9 @@ class Stage {
   callMonster(){
     for(let i=0; i<=10; i++){
       if(i===10){
-        allMonsterComProp.arr[i] = new Monster(greenMonBoss, hero.movex + gameProp.screenWidth + 600 * i)
+        allMonsterComProp.arr[i] = new Monster(stageInfo.monster[this.level].bossMon, hero.movex + gameProp.screenWidth + 600 * i)
       }else{
-        allMonsterComProp.arr[i] = new Monster(greenMon, hero.movex + gameProp.screenWidth + 700 * i);
+        allMonsterComProp.arr[i] = new Monster(stageInfo.monster[this.level].defaultMon, hero.movex + gameProp.screenWidth + 700 * i);
       }
     }    
   }
@@ -34,9 +34,15 @@ class Stage {
     if(allMonsterComProp.arr.length === 0 && this.isStart){
       this.isStart = false;
       this.level++;
-      this.stageGuide('CLEAR')
-      console.log('몬스터 올킬');
-      this.stageStart();
+
+      if(this.level < stageInfo.monster.length){
+        this.stageGuide('CLEAR')
+        console.log('몬스터 올킬');
+        this.stageStart();
+        hero.heroUpgrade();
+      }else{
+        this.stageGuide('ALL CLEAR')
+      }
     }
   };
 }
@@ -51,9 +57,9 @@ class Hero {
     this.jumpHeight = 300;
     this.jumpDuration = this.jumpHeight*1.5;
     this.direction = 'right';
-    this.attackDamage = 10000000;
+    this.attackDamage = 10000;
     this.hpProgress = 0;
-    this.hpValue = 1000000;
+    this.hpValue = 100000;
     this.defaultHpValue = this.hpValue;
     this.realDamage = 0;
   }
@@ -163,6 +169,10 @@ class Hero {
   hitDamage(){
     this.realDamage = this.attackDamage - Math.round(this.attackDamage * 0.1 * Math.random())
   };
+  heroUpgrade(){
+    this.speed += 1.3;
+    this.attackDamage += 15000
+  };
 }
 
 // 수리검 클래스
@@ -265,6 +275,7 @@ class Monster {
     this.moveX = 0;
     this.speed = property.speed;
     this.crashDamage = property.crashDamage;
+    this.score = property.score;
 
     this.init();
   }
@@ -295,6 +306,7 @@ class Monster {
     this.el.classList.add('remove');
     setTimeout(()=> this.el.remove(),350);
     allMonsterComProp.arr.splice(index,1);
+    this.setScore();
   }
   moveMonster(){
     if(this.moveX + this.positionX + this.el.offsetWidth + hero.position().left - hero.movex <= 0){
@@ -313,5 +325,8 @@ class Monster {
       hero.updateHp(this.crashDamage)
     }
   };
-
+  setScore(){
+    stageInfo.totalScore += this.score;
+    document.querySelector('.score_box').innerText = stageInfo.totalScore;
+  };
 }

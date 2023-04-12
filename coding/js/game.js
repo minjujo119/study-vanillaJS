@@ -60,6 +60,12 @@ const setGameBackground = () => {
 
 const stageInfo = {
   stage : [],
+  totalScore: 0,
+  monster: [
+    {defaultMon:greenMon, bossMon:greenMonBoss},
+    {defaultMon:yellowMon, bossMon:yellowMonBoss},
+    {defaultMon:pinkMon, bossMon:pinkMonBoss},
+  ],
 }
 
 // 키가 눌렸을 때 이벤트
@@ -111,8 +117,6 @@ const init = () => {
   // allMonsterComProp.arr[0] = new Monster(pinkMonBoss,gameProp.screenWidth + 700);
   // allMonsterComProp.arr[1] = new Monster(yellowMonBoss,gameProp.screenWidth + 1400);
   // allMonsterComProp.arr[2] = new Monster(greenMonBoss,gameProp.screenWidth + 2100);
-
-
   loadImg();
   windowEvent();
   renderGame();

@@ -8,6 +8,8 @@
 .game_info .hero_state .state_box{float:left;width:80%;height:100%;padding-top:10px;}
 .game_info .hero_state .state_box .hp{width:100%;height:10px;border:1px solid #000;}
 .game_info .hero_state .state_box .hp span{display:block;width:100%;height:100%;background-color:red;transition:width 0.3s linear;}
+.game_info .score_box {position:absolute;top:10px; right:10px; color:#fff;font-size:18px;}
+
 .game_over {display:none;align-items:center;justify-content:center;position:fixed;left:0;top:0;z-index:200;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.5)}
 .game_over p{font-size:150px;text-align:center;color:#fff;}
 .game_over.active{display:flex;}
