@@ -4,7 +4,7 @@
 바닐라 자바스크립트를 열심히 공부해보자!
 
 산출물페이지
-https://minjujo119.github.io/study_vanillaJS/index.html
+https://minjujo119.github.io/study-vanillaJS/index.html
 
 강의명
 웹게임을 만들며 배우는 인터렉티브웹!
